@@ -1,26 +1,21 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { CryptoService } from '../services/crypto.service';
 import { CryptoData } from '../Model/CryptoData';
-import { CryptoComponent } from "./crypto/crypto.component";
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, CryptoComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   cryptoData: CryptoData | null = null;
 
   constructor(private cryptoService: CryptoService) {}
 
   ngOnInit(): void {
-    this.cryptoService
-    .getCryptoData()
-    .subscribe(
-      data => {
+    this.cryptoService.getCryptoData().subscribe(
+      (data: CryptoData) => {
+        // Recebe um único objeto CryptoData
         this.cryptoData = data;
       },
       error => {
